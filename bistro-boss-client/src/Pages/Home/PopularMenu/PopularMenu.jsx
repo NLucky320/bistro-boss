@@ -27,7 +27,7 @@ const [menu, setMenu]=useState([])
                 
             </div>
             <div className=' text-center pt-4'>
-                      <button className='btn btn-outline border-2 mt-4'>View Full Menu</button>
+                      <button className='btn btn-outline  border-0 border-b-2 mt-4'>View Full Menu</button>
                 </div>
         </div>
     );
