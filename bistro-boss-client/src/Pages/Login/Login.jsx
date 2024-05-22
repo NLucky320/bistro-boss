@@ -1,11 +1,16 @@
-import  { useContext, useEffect, useRef, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import Swal from 'sweetalert2'
 const Login = () => {
-    const captchaRef = useRef()
+  const location = useLocation();
+  const navigate = useNavigate();
     const [disabled, setDisabled]=useState(true)
 
+  const from = location?.state?.pathname || '/';
+  
 const {signIn}=useContext(AuthContext)
 
     useEffect(() => {
@@ -22,11 +27,21 @@ const {signIn}=useContext(AuthContext)
         .then(result=>{
           const user = result.user;
           console.log(user)
-        })
+        Swal.fire({
+                    title: 'User Login Successful.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+                navigate(from, { replace: true });
+            })
     }
 
-    const handleValidateCaptcha = () => {
-        const user_captcha_value = captchaRef.current.value;
+    const handleValidateCaptcha = (e) => {
+        const user_captcha_value = e.target.value;
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false)
         }
@@ -37,7 +52,11 @@ const {signIn}=useContext(AuthContext)
 }
 
     return (
- <div className="hero min-h-screen bg-base-200">
+      <>
+           <Helmet>
+                <title>Bistro Boss | Login</title>
+            </Helmet>
+       <div className="hero min-h-screen bg-base-200">
   <div className="hero-content flex-col  md:flex-row">
     <div className="text-center md:w-1/2 lg:text-left">
       <h1 className="text-5xl font-bold">Login now!</h1>
@@ -65,9 +84,7 @@ const {signIn}=useContext(AuthContext)
           <label className="label">
   <LoadCanvasTemplate />
           </label>
-                            <input type="text" ref={captchaRef} placeholder="type the captcha above" name='captcha' className="input input-bordered" required />
-                            <button onClick={handleValidateCaptcha} className='btn btn-outline btn-xs mt-2'> Validate</button>
-     
+                            <input type="text" onBlur={handleValidateCaptcha }  placeholder="type the captcha above" name='captcha' className="input input-bordered" required />
         </div>
         <div className="form-control mt-6">
                             
@@ -78,6 +95,7 @@ const {signIn}=useContext(AuthContext)
     </div>
   </div>
 </div>
+      </>
     );
 };
 
