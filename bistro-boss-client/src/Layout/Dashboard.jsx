@@ -1,30 +1,48 @@
 import React from 'react';
-import { FaCalendar, FaHome, FaList, FaShoppingCart } from 'react-icons/fa';
+import { FaCalendar, FaHome, FaList, FaShoppingCart, FaUser } from 'react-icons/fa';
 import { NavLink, Outlet } from 'react-router-dom';
 import { FcRating } from "react-icons/fc";
-import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { MdOutlinePayments, MdOutlineRestaurantMenu } from "react-icons/md";
+import { IoIosContact } from "react-icons/io";
+import useCart from '../Hooks/useCart';
 const Dashboard = () => {
+    const [cart] = useCart()
+    const isAdmin = true;
     return (
         <div className='flex max-w-[1170px] mx-auto'>
             <div className="w-64 min-h-screen bg-[#D1A054]">
                 <ul className='menu p-4'>
-
-                      <li>
-                        < NavLink to="/dashboard/userHome">
+                    {
+                        isAdmin ? <>
+                                  <li>
+                        < NavLink to="/dashboard/adminHome">
                            <FaHome></FaHome>
-                          User Home
+                          Admin Home
                         </NavLink>          
                     </li>
                       <li>
                         < NavLink to="/dashboard/reservation">
-                       <FaCalendar></FaCalendar>
-                     Reservation
+                        <FaCalendar></FaCalendar>
+                Reservation
+                        </NavLink>          
+                    </li>
+                      <li>
+                        < NavLink to="/dashboard/payment">
+                <MdOutlinePayments />
+                  
+              Payment History
+                        </NavLink>          
+                    </li>
+                      <li>
+                        < NavLink to="/dashboard/addItems">
+                           <MdOutlineRestaurantMenu />
+                 Add Items
                         </NavLink>          
                     </li>
                         <li>
                         < NavLink to="/dashboard/cart">
                              <FaShoppingCart></FaShoppingCart>
-                            My Cart
+                            My Cart ({cart.length})
                         </NavLink>          
                     </li>
                       <li>
@@ -36,13 +54,21 @@ const Dashboard = () => {
                 
                     <li>
                         < NavLink to="/dashboard/bookings">
-                             <FaList></FaList>
-                            My Bookings
+                         <FaCalendar></FaCalendar>
+                            Manage Bookings
                         </NavLink>          
                     </li>
-                    <div className='divider'>
+                    <li>
+                        < NavLink to="/dashboard/users">
+                         <FaUser></FaUser>
+                          All Users
+                        </NavLink>          
+                    </li>
+                        </> : <>
+                             <div className='divider'>
 
                     </div>
+
                      <li>
                         < NavLink to="/">
                            <FaHome></FaHome>
@@ -55,6 +81,18 @@ const Dashboard = () => {
                       Menu
                         </NavLink>          
                     </li>
+                     <li>
+                        < NavLink to="/contact">
+                  <IoIosContact />
+                   Contact
+                        </NavLink>          
+                    </li>     
+                        </>
+                    }
+
+                
+                    
+                  
                   
 </ul>
             </div>
