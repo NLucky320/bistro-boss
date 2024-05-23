@@ -31,6 +31,8 @@ const FoodCard = ({ item }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+          //refetch the cart to update the cart item
+          refetch()
         }
       });
     } else {
