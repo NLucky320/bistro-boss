@@ -10,7 +10,7 @@ import drinkImg from '../../../assets/menu/banner3.jpg'
 import useMenu from '../../Hooks/useMenu';
 import SectionTitle from '../../component/SectionTitle/SectionTitle';
 import MenuCategory from './Menucategory/MenuCategory';
-const Menu = ({img, title, text}) => {
+const  Menu = ({img, title, text}) => {
     const [menu, loading] = useMenu();
 
 

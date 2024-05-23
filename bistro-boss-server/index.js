@@ -25,16 +25,33 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    //menu collection
     const menuCollection = client.db("bistroboss").collection("menu");
     const reviewsCollection = client.db("bistroboss").collection("reviews");
+    const cartCollection = client.db("bistroboss").collection("carts");
 
     app.get("/menu", async (req, res) => {
       const result = await menuCollection.find().toArray();
       res.send(result);
     });
 
+    //review collection
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
+      res.send(result);
+    });
+
+    //cart collection
+    app.get("/carts", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const result = await cartCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.post("/carts", async (req, res) => {
+      const cartItem = req.body;
+      const result = await cartCollection.insertOne(cartItem);
       res.send(result);
     });
 
@@ -57,3 +74,15 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`bistro boss is running on port ${port} `);
 });
+
+/* 
+-----------------
+naming convention
+
+app.get('/users')
+app.get('/users/:id')
+app.post('/users')
+app.patch('/users/:id')
+app.put('/users/:id')
+app.delete('/users/:id')
+*/
