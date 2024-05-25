@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { MdDelete } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -13,7 +13,24 @@ const AllUsers = () => {
             return res.data
         }
     })
-    const handelDeleteUser = user => {
+    const handleMakeAdmin = user => {
+      axiosSecure.patch(`/users/admin/${user._id}`)
+        .then(res => {
+          console.log(res.data)
+          if (res.data.modifiedCount > 0) {
+            refetch();
+            Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: `${user.name} is an admin now!`,
+  showConfirmButton: false,
+  timer: 1500
+});
+          }
+      })
+}
+
+    const handleDeleteUser = user => {
             Swal.fire({
   title: "Are you sure?",
   text: "You won't be able to revert this!",
@@ -72,11 +89,13 @@ const AllUsers = () => {
  {user.email}
         </td>
                                 <td>
-                   <button onClick={()=>handelDeleteUser(user._id)} className="btn bg-[#D1A054] text-white btn-xs"><FaUser /></button>
+                                {
+                                  user.role==='admin'? 'Admin' :  <button onClick={()=>handleMakeAdmin(user)} className="btn bg-[#D1A054] text-white btn-xs"><FaUser /></button>
+                 }
                        
         </td>
         <th>
-          <button onClick={()=>handelDeleteUser(user._id)} className="btn bg-[#B91C1C] text-white btn-xs"><MdDelete /></button>
+          <button onClick={()=>handleDeleteUser(user)} className="btn bg-[#B91C1C] text-white btn-xs"><MdDelete /></button>
         </th>
       </tr>)
    }

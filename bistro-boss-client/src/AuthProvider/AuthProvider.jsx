@@ -39,6 +39,12 @@ return updateProfile(auth.currentUser, {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            if (currentUser) {
+                //get token and store client
+            }
+            else {
+                //do something
+            }
             // console.log('current User', currentUser);
             setLoading(false);
         });
