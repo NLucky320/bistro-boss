@@ -62,7 +62,7 @@ return updateProfile(auth.currentUser, {
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [axiosPublic]);
 
     const authInfo = {
           createUser,
