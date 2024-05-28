@@ -11,7 +11,7 @@ import useMenu from '../../Hooks/useMenu';
 import SectionTitle from '../../component/SectionTitle/SectionTitle';
 import MenuCategory from './Menucategory/MenuCategory';
 const  Menu = ({img, title, text}) => {
-    const [menu, loading] = useMenu();
+    const [menu] = useMenu();
 
 
 const desserts=menu.filter(item=>item.category==='dessert')

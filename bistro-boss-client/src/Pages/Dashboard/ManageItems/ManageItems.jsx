@@ -1,14 +1,18 @@
-import React from 'react';
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
+import Swal from "sweetalert2";
+
+
+import { Link } from "react-router-dom";
+import useMenu from "../../../Hooks/useMenu";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import SectionTitle from "../../../component/SectionTitle/SectionTitle";
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import useMenu from '../../../Hooks/useMenu';
-import Swal from 'sweetalert2';
+
+
 const ManageItems = () => {
-     const [menu, , refetch] = useMenu();
+    const [menu, , refetch] = useMenu();
     const axiosSecure = useAxiosSecure();
-    
+
     const handleDeleteItem = (item) => {
         Swal.fire({
             title: "Are you sure?",
@@ -38,12 +42,12 @@ const ManageItems = () => {
             }
         });
     }
+
     return (
         <div>
-            <SectionTitle heading='Manage all items' subHeading='Hurry Up'>
-
-            </SectionTitle>
-              <div className="overflow-x-auto">
+            <SectionTitle heading="Manage All Items" subHeading="Hurry up"></SectionTitle>
+            <div>
+                <div className="overflow-x-auto">
                     <table className="table w-full">
                         {/* head */}
                         <thead>
@@ -100,6 +104,7 @@ const ManageItems = () => {
 
                     </table>
                 </div>
+            </div>
         </div>
     );
 };

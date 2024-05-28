@@ -42,7 +42,7 @@ async function run() {
 
     // middlewares
     const verifyToken = (req, res, next) => {
-      console.log("inside verify token", req.headers.authorization);
+      // console.log("inside verify token", req.headers.authorization);
       if (!req.headers.authorization) {
         return res.status(401).send({ message: "unauthorized access" });
       }
@@ -118,8 +118,10 @@ async function run() {
 
     app.delete("/users/:id", async (req, res) => {
       const id = req.params.id;
+      console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await userCollection.deleteOne(query);
+      console.log(result);
       res.send(result);
     });
 
@@ -128,10 +130,22 @@ async function run() {
       const result = await menuCollection.find().toArray();
       res.send(result);
     });
+    app.get("/menu/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await menuCollection.findOne(query);
+      res.send(result);
+    });
 
     app.post("/menu", verifyToken, verifyAdmin, async (req, res) => {
       const item = req.body;
       const result = await menuCollection.insertOne(item);
+      res.send(result);
+    });
+    app.delete("/menu/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await menuCollection.deleteOne(query);
       res.send(result);
     });
 
