@@ -3,6 +3,7 @@ import useCart from '../../../Hooks/useCart';
 import { MdDelete } from "react-icons/md";
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 const Cart = () => {
     const [cart, refetch] = useCart();
     const axiosSecure=useAxiosSecure()
@@ -39,7 +40,12 @@ const Cart = () => {
             <div className='flex justify-between'>
                 <h2 className='text-3xl font-bold'>Items: {cart.length}</h2>
                 <h2 className='text-2xl font-bold'>Total Price: ${totalPrice}</h2>
-                <button className='btn bg-[#D1A054] text-white'>Pay</button>
+          {
+            cart.length?   <Link to='/dashboard/payment'>
+             <button className='btn bg-[#D1A054] text-white'>Pay</button>
+            </Link> :
+                <button disabled className='btn bg-[#D1A054] text-white'>Pay</button>
+       }
             </div>
      <div className="overflow-x-auto">
   <table className="table">
